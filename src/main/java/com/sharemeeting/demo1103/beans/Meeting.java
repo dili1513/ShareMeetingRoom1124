@@ -1,47 +1,43 @@
 package com.sharemeeting.demo1103.beans;
 
 public class Meeting {
-    private int Meeting_id;
+    private int ID;
     private String Name;
     private String Sponsor;
-    private long Start_time;
-    private long End_time;
+    private String StartTime;
+    private String EndTime;
+    private int Headcount;
     private int Projector;
     private int Microphone;
-    private String Status;//申请状态，为null或教室名；
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
-    }
-
-    public String getAdmName() {
-        return AdmName;
-    }
-
-    public void setAdmName(String admName) {
-        AdmName = admName;
-    }
-
-    private String user_id;//申请人ID,数据库中设varchar(30)；
+    private String Status;//申请状态，为null或地点；
+    private String UserID;//申请人ID,数据库中设varchar(30)；
     private String AdmName;
-    private int Name_List_id;
-    private int Headcount;
+    private Integer RoomID;
 
-
-    public int getHeadcount() {
-        return Headcount;
+    @Override
+    public String toString() {
+        return "Meeting{" +
+                "ID=" + ID +
+                ", Name='" + Name + '\'' +
+                ", Sponsor='" + Sponsor + '\'' +
+                ", StartTime='" + StartTime + '\'' +
+                ", EndTime='" + EndTime + '\'' +
+                ", Headcount=" + Headcount +
+                ", Projector=" + Projector +
+                ", Microphone=" + Microphone +
+                ", Status='" + Status + '\'' +
+                ", UserID='" + UserID + '\'' +
+                ", AdmName='" + AdmName + '\'' +
+                ", RoomID=" + RoomID +
+                '}';
     }
 
-    public void setHeadcount(int headcount) {
-        Headcount = headcount;
+    public int getID() {
+        return ID;
     }
 
-    public int getMeeting_id() {
-        return Meeting_id;
-    }
-
-    public void setMeeting_id(int meeting_id) {
-        Meeting_id = meeting_id;
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public String getName() {
@@ -60,20 +56,28 @@ public class Meeting {
         Sponsor = sponsor;
     }
 
-    public long getStart_time() {
-        return Start_time;
+    public String getStartTime() {
+        return StartTime;
     }
 
-    public void setStart_time(long start_time) {
-        Start_time = start_time;
+    public void setStartTime(String startTime) {
+        StartTime = startTime;
     }
 
-    public long getEnd_time() {
-        return End_time;
+    public String getEndTime() {
+        return EndTime;
     }
 
-    public void setEnd_time(long end_time) {
-        End_time = end_time;
+    public void setEndTime(String endTime) {
+        EndTime = endTime;
+    }
+
+    public int getHeadcount() {
+        return Headcount;
+    }
+
+    public void setHeadcount(int headcount) {
+        Headcount = headcount;
     }
 
     public int getProjector() {
@@ -100,11 +104,27 @@ public class Meeting {
         Status = status;
     }
 
-    public int getName_List_id() {
-        return Name_List_id;
+    public String getUserID() {
+        return UserID;
     }
 
-    public void setName_List_id(int name_List_id) {
-        Name_List_id = name_List_id;
+    public void setUserID(String userID) {
+        UserID = userID;
+    }
+
+    public String getAdmName() {
+        return AdmName;
+    }
+
+    public void setAdmName(String admName) {
+        AdmName = admName;
+    }
+
+    public Integer getRoomID() {
+        return RoomID;
+    }
+
+    public void setRoomID(Integer roomID) {
+        RoomID = roomID;
     }
 }
