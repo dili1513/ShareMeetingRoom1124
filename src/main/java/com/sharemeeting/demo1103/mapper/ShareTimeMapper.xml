@@ -1,0 +1,31 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD com.example.Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sharemeeting.demo1103.mapper.ShareTimeMapper">
+    <resultMap id="result" type="com.sharemeeting.demo1103.beans.ShareTime">
+        <result property="StartTime" column="StartTime" />
+        <result property="EndTime" column="EndTime"/>
+        <result property="MeetingRoomID" column="MeetingRoomID"/>
+
+    </resultMap>
+    <select id="ListShareTime" resultMap="result">
+        SELECT * FROM sharemeetingroom.ShareTime
+    </select>
+
+    <insert id="insertST" parameterType="com.sharemeeting.demo1103.beans.ShareTime"
+            keyProperty="ID" useGeneratedKeys="true">
+        INSERT INTO sharemeetingroom.ShareTime(StartTime,EndTime,MeetingRoomID)
+        VALUES (#{shareTime.StartTime, jdbcType=VARCHAR},#{shareTime.EndTime, jdbcType=VARCHAR},#{shareTime.MeetingRoomID,jdbcType=INTEGER})
+    </insert>
+
+    <delete id="deleteST" parameterType="int">
+        delete from sharemeetingroom.ShareTime where ID=#{ID}
+    </delete>
+
+    <update id="UpdateST" parameterType="com.sharemeeting.demo1103.beans.User"
+            keyProperty="ID" useGeneratedKeys="true">
+    update sharemeetingroom.ShareTime set ShareTime.StartTime=#{shareTime.StartTime},ShareTime.EndTime=#{shareTime.EndTime}
+    ,MeetingRoomID=#{shareTime.MeetingRoomID} where ShareTime.ID=#{shareTime.ID}
+    </update>
+</mapper>

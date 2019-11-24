@@ -1,0 +1,33 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD com.example.Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sharemeeting.demo1103.mapper.AdminMapper">
+    <resultMap id="result" type="com.sharemeeting.demo1103.beans.Administrator">
+        <result property="name" column="name" />
+        <result property="password" column="password"/>
+
+    </resultMap>
+    <select id="ListAdmin" resultMap="result">
+        SELECT * FROM Administrator
+    </select>
+
+    <select id="findAdminByName" resultMap="result">
+        SELECT * FROM Administrator where name=#{name}
+    </select>
+
+    <insert id="insertAdmin" parameterType="com.sharemeeting.demo1103.beans.Administrator"
+            keyProperty="name" useGeneratedKeys="true">
+        INSERT INTO Administrator(name,password)
+        VALUES (#{name, jdbcType=VARCHAR},#{password, jdbcType=VARCHAR})
+    </insert>
+
+    <delete id="deleteAdmin" parameterType="String">
+        delete from Administrator where name=#{name}
+    </delete>
+
+    <update id="UpdateAdmin" parameterType="com.sharemeeting.demo1103.beans.Administrator"
+            keyProperty="name" useGeneratedKeys="true">
+    update Administrator set Administrator.password=#{password} where Administrator.name=#{name}
+    </update>
+</mapper>

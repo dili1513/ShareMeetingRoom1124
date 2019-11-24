@@ -1,0 +1,42 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD com.example.Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sharemeeting.demo1103.mapper.MeetingRoomMapper">
+    <resultMap id="result" type="com.sharemeeting.demo1103.beans.MeetingRoom">
+        <result property="ID" column="ID" />
+        <result property="Address" column="Address"/>
+        <result property="Name " column="Name"/>
+        <result property="Capacity" column="Capacity"/>
+        <result property="Projector" column="Projector"/>
+        <result property="Microphone" column="Microphone"/>
+        <result property="UserName" column="UserName"/>
+        <result property="AdmName" column="AdmName"/>
+    </resultMap>
+
+    <select id="ListMeetingRoom" resultType="com.sharemeeting.demo1103.beans.MeetingRoom">
+        SELECT * FROM sharemeetingroom.MeetingRoom
+    </select>
+
+<!--    <select id="findAdminByName" resultMap="result">-->
+<!--        SELECT * FROM Administrator where name=#{name}-->
+<!--    </select>-->
+
+    <insert id="insertMeetingRoom" parameterType="com.sharemeeting.demo1103.beans.MeetingRoom">
+<!--            keyProperty="ID" useGeneratedKeys="true">-->
+        INSERT INTO sharemeetingroom.MeetingRoom(Address,Name,Capacity,Projector,Microphone,UserName,AdmName)
+        VALUES (#{room.Address, jdbcType=VARCHAR},#{room.Name, jdbcType=VARCHAR},
+                #{room.Capacity,jdbcType=INTEGER},#{room.Projector,jdbcType=INTEGER},
+                #{room.Microphone,jdbcType=INTEGER},#{room.Username,jdbcType=VARCHAR},
+                #{room.AdmName,jdbcType=VARCHAR})
+    </insert>
+
+    <delete id="deleteMeetingRoom" parameterType="String">
+        delete from sharemeetingroom.MeetingRoom where Address=#{Address}
+    </delete>
+
+    <update id="UpdateMeetingRoom" parameterType="com.sharemeeting.demo1103.beans.MeetingRoom"
+            ># keyProperty="Address" useGeneratedKeys="true">
+    update sharemeetingroom.MeetingRoom set sharemeetingroom.MeetingRoom.Name=#{room.Name} where sharemeetingroom.MeetingRoom.ID=#{room.ID}
+    </update>
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD com.example.Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sharemeeting.demo1103.mapper.UserMapper">
+    <resultMap id="result" type="com.sharemeeting.demo1103.beans.User">
+        <result property="name" column="name" />
+        <result property="password" column="password"/>
+
+    </resultMap>
+    <select id="ListUser" resultMap="result">
+        SELECT * FROM User
+    </select>
+
+    <select id="findUserByName" resultMap="result">
+        SELECT * FROM User where name=#{name}
+    </select>
+
+    <insert id="insertUser" parameterType="com.sharemeeting.demo1103.beans.User"
+            keyProperty="name" useGeneratedKeys="true">
+        INSERT INTO user(name,password)
+        VALUES (#{name, jdbcType=VARCHAR},#{password, jdbcType=VARCHAR})
+    </insert>
+
+    <delete id="delete" parameterType="String">
+        delete from user where name=#{name}
+    </delete>
+
+    <update id="Update" parameterType="com.sharemeeting.demo1103.beans.User"
+            keyProperty="name" useGeneratedKeys="true">
+    update user set user.password=#{password} where user.name=#{name}
+    </update>
+</mapper>
+<!--<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">-->
+<!--<mapper namespace="com.sharemeeting.demo1103.mapper.UserMapper">-->
+<!--    <select id="getUser" resultType="com.sharemeeting.demo1103.beans.User">-->
+<!--        select * from users-->
+<!--    </select>-->
+<!--    <delete id="deleteUser" parameterType="String">-->
+<!--        delete from users where name =#{name}-->
+<!--    </delete>-->
+<!--    <insert id="addUser" parameterType="com.sharemeeting.demo1103.beans.User">-->
+<!--        insert into users(name,password)values(#{name},#{password})-->
+<!--    </insert>-->
+<!--</mapper>-->
