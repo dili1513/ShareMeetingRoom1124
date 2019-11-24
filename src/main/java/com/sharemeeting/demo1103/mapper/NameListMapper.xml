@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sharemeeting.demo1103.mapper.NameListMapper">
+    <select id="getNameList" resultType="com.sharemeeting.demo1103.beans.NameList">
+        select * from namelist
+    </select>
+
+    <insert id="saveNameList" parameterType="com.sharemeeting.demo1103.beans.NameList">
+        insert into NameList(ID,Name,Department)
+        values(#{ID},#{Name},#{Department});
+    </insert>
+
+    <delete id="deleteNameList" parameterType="int">
+        delete from NameList where ID = #{nlid}
+    </delete>
+
+    <select id="findByID" parameterType="int" resultType="com.sharemeeting.demo1103.beans.NameList">
+        select * from NameList where ID = #{nlid}
+    </select>
+
+    <select id="findByDpt" parameterType="String" resultType="com.sharemeeting.demo1103.beans.NameList">
+        select * from NameList where Department = #{dpt}
+    </select>
+</mapper>

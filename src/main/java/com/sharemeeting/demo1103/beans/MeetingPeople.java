@@ -2,7 +2,7 @@ package com.sharemeeting.demo1103.beans;
 
 public class MeetingPeople {
     private int NameID;//代表学号；
-    private int id;//参加的会议的ID；
+    private int ID;//参加的会议的ID；
 
     public int getNameID() {
         return NameID;
@@ -12,11 +12,11 @@ public class MeetingPeople {
         NameID = nameID;
     }
 
-    public int getId() {
-        return id;
+    public int getID() {
+        return ID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setID(int ID) {
+        this.ID = ID;
     }
 }

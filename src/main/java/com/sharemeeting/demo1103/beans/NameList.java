@@ -1,16 +1,25 @@
 package com.sharemeeting.demo1103.beans;
 
 public class NameList {
-    private int Name_List_id;
+    private int ID;
     private String Name;
     private String Department;
 
-    public int getName_List_id() {
-        return Name_List_id;
+    @Override
+    public String toString() {
+        return "NameList{" +
+                "ID=" + ID +
+                ", Name='" + Name + '\'' +
+                ", Department='" + Department + '\'' +
+                '}';
     }
 
-    public void setName_List_id(int name_List_id) {
-        Name_List_id = name_List_id;
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public String getName() {
