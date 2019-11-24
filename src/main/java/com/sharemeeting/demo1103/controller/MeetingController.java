@@ -2,13 +2,13 @@ package com.sharemeeting.demo1103.controller;
 
 import com.sharemeeting.demo1103.beans.Meeting;
 import com.sharemeeting.demo1103.service.MeetingService;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
