@@ -122,7 +122,7 @@ public class MeetingController {
         Iterator<Meeting> it = meetings.iterator();
         while (it.hasNext()) {
             Meeting meeting = it.next();
-            //判断是否已结束，若结束则status改为以结束，并且更新meeting
+            //判断是否已结束，若结束则status改为已结束，并且更新meeting
             if(meeting.getStatus().compareTo("已分配") == 0){
                 meeting.setStatus(isFinished(meeting.getEndTime(),meeting.getStatus()));
                 meetingService.updateMeeting(meeting);

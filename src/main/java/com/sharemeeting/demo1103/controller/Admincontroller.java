@@ -24,8 +24,15 @@ public class Admincontroller {
     //对数据库进行查找操作
     @RequestMapping("ListAdminByname")
     @ResponseBody
-    public List<Administrator> ListAdminByname(String name) {
-        return adminservice.findAdminByName(name);
+    public String ListAdminByname(String name) {
+        Administrator admin= adminservice.findAdminByName(name);
+        if(admin!=null) {
+            return admin.getPassword();
+        }
+        else{
+            return "null";
+        }
+//        return adminservice.findAdminByName(name);
     }
     //对数据库进行的删除操作
     @RequestMapping(value = "deleteAdmin", method = RequestMethod.GET)

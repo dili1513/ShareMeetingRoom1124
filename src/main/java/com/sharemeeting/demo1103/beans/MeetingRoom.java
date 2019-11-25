@@ -8,7 +8,16 @@ public class MeetingRoom {
     private int Projector;
     private int Microphone;
     private String Username;
-    private String AdmName;
+
+    public String getAdmname() {
+        return Admname;
+    }
+
+    public void setAdmname(String admname) {
+        Admname = admname;
+    }
+
+    private String Admname;
 
     public int getID() {
         return ID;
@@ -66,11 +75,5 @@ public class MeetingRoom {
         Username = username;
     }
 
-    public String getAdmName() {
-        return AdmName;
-    }
 
-    public void setAdmName(String admName) {
-        AdmName = admName;
-    }
 }

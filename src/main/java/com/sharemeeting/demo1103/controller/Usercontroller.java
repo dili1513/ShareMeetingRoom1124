@@ -1,6 +1,7 @@
 package com.sharemeeting.demo1103.controller;
 
 
+import com.sharemeeting.demo1103.beans.Meeting;
 import com.sharemeeting.demo1103.beans.User;
 import com.sharemeeting.demo1103.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Iterator;
 import java.util.List;
 
 @RestController
@@ -25,9 +28,21 @@ public class Usercontroller {
     //对数据库进行查找操作
     @RequestMapping("ListUserByname")
     @ResponseBody
-    public List<User> ListUserByname(String name) {
-        return userservice.findByName(name);
-    }//返回空的情况；
+    public String ListUserByName(String name){
+        User user=userservice.findByName(name);
+        if(user!=null){
+            return user.getPassword();
+        }
+        else{
+            return "null";
+        }
+
+//        String userpwd="";
+//        Iterator<User> it = Users.iterator();
+    }
+//    public List<User> ListUserByname(String name) {
+//        return userservice.findByName(name);
+//    }//返回空的情况；
     //对数据库进行的删除操作
     @RequestMapping(value = "deleteUser", method = RequestMethod.GET)
     public String delete(String name) {
