@@ -1,6 +1,8 @@
 package com.sharemeeting.demo1103.controller;
 
 import com.sharemeeting.demo1103.beans.Meeting;
+import com.sharemeeting.demo1103.beans.MeetingPeople;
+import com.sharemeeting.demo1103.service.MeetingPeopleService;
 import com.sharemeeting.demo1103.service.MeetingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,8 @@ import java.util.List;
 public class MeetingController {
     @Autowired
     private MeetingService meetingService;
+    @Autowired
+    private MeetingPeopleService meetingPeopleService;
 
     @RequestMapping("getMeetings")
     @ResponseBody
@@ -25,12 +29,21 @@ public class MeetingController {
         return meetingService.getMeetings();
     }
 
-    //1.添加
+    //1.添加,新增nameList
     @RequestMapping(value = "insert", method = RequestMethod.POST)
-    public String insert(Meeting meeting)
+    public String insert(Meeting meeting, String peoples)
     {
         meeting.setStatus("申请中");
         int result = meetingService.saveMeeting(meeting);
+        //分割nameList字符串并插入到NamePeople表中
+        String[] split = peoples.split(";");
+        for(String people : split){
+            int number = Integer.parseInt(people);
+            MeetingPeople meetingPeople = new MeetingPeople();
+            meetingPeople.setNameID(number);
+            meetingPeople.setID(meeting.getID());
+            meetingPeopleService.save(meetingPeople);
+        }
         if (result >= 1) {
             return meeting.getID()+"";
         } else {
