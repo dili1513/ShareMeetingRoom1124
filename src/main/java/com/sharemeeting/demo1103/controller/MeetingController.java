@@ -33,21 +33,21 @@ public class MeetingController {
     @RequestMapping(value = "insert", method = RequestMethod.POST)
     public String insert(Meeting meeting, String peoples)
     {
-        meeting.setStatus("申请中");
-        int result = meetingService.saveMeeting(meeting);
-        //分割nameList字符串并插入到NamePeople表中
-        String[] split = peoples.split(";");
-        for(String people : split){
-            int number = Integer.parseInt(people);
-            MeetingPeople meetingPeople = new MeetingPeople();
-            meetingPeople.setNameID(number);
-            meetingPeople.setID(meeting.getID());
-            meetingPeopleService.save(meetingPeople);
-        }
-        if (result >= 1) {
+        try{
+            meeting.setStatus("申请中");
+            int result = meetingService.saveMeeting(meeting);
+            //分割nameList字符串并插入到NamePeople表中
+            String[] split = peoples.split(";");
+            for(String people : split){
+                int number = Integer.parseInt(people);
+                MeetingPeople meetingPeople = new MeetingPeople();
+                meetingPeople.setNameID(number);
+                meetingPeople.setID(meeting.getID());
+                meetingPeopleService.save(meetingPeople);
+            }
             return meeting.getID()+"";
-        } else {
-            return "添加失败";
+        }catch (Exception e){
+            return "WTFnull";
         }
     }
 
@@ -67,11 +67,11 @@ public class MeetingController {
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public String update(Meeting meeting)
     {
-        int result = meetingService.updateMeeting(meeting);
-        if (result >= 1) {
+        try{
+            int result = meetingService.updateMeeting(meeting);
             return "更新成功";
-        } else {
-            return "更新失败";
+        }catch (Exception e){
+            return "WTFnull";
         }
     }
     //在“已分配”状态下才会判断会议是否完成，反成了则返回“已完成”，否则返回原来的状态
@@ -95,15 +95,19 @@ public class MeetingController {
     @RequestMapping("findByID")
     @ResponseBody
     public String findByID(Integer ID) {
-        Meeting meeting = meetingService.findByID(ID);
-        //判断是否已结束，若结束则status改为以结束，并且更新meeting
-        if(meeting.getStatus().compareTo("已分配") == 0){
-            meeting.setStatus(isFinished(meeting.getEndTime(),meeting.getStatus()));
-            meetingService.updateMeeting(meeting);
+        try{
+            Meeting meeting = meetingService.findByID(ID);
+            //判断是否已结束，若结束则status改为以结束，并且更新meeting
+            if(meeting.getStatus().compareTo("已分配") == 0){
+                meeting.setStatus(isFinished(meeting.getEndTime(),meeting.getStatus()));
+                meetingService.updateMeeting(meeting);
+            }
+            return meeting.getName()+ ";" + meeting.getSponsor() + ";" + meeting.getStartTime() + ";" + meeting.getEndTime() + ";" + meeting.getHeadcount() + ";" +
+                    meeting.getProjector() + ";" + meeting.getMicrophone() + ";" + meeting.getStatus() + ";" + meeting.getUserID() + ";" + meeting.getAdmName() + ";" +
+                    meeting.getRoomID();
+        }catch (Exception e){
+            return "WTFnull";
         }
-        return meeting.getName()+ ";" + meeting.getSponsor() + ";" + meeting.getStartTime() + ";" + meeting.getEndTime() + ";" + meeting.getHeadcount() + ";" +
-                meeting.getProjector() + ";" + meeting.getMicrophone() + ";" + meeting.getStatus() + ";" + meeting.getUserID() + ";" + meeting.getAdmName() + ";" +
-                meeting.getRoomID();
     }
 
     //根据UID查找
@@ -136,21 +140,25 @@ public class MeetingController {
     @RequestMapping("findByAID")
     @ResponseBody
     public String findAyUID(String AID) {
-        List<Meeting> meetings = meetingService.findByAID(AID);
-        String str = "";
-        Iterator<Meeting> it = meetings.iterator();
-        while (it.hasNext()) {
-            Meeting meeting = it.next();
-            //判断是否已结束，若结束则status改为以结束，并且更新meeting
-            if(meeting.getStatus().compareTo("已分配") == 0){
-                meeting.setStatus(isFinished(meeting.getEndTime(),meeting.getStatus()));
-                meetingService.updateMeeting(meeting);
+        try{
+            List<Meeting> meetings = meetingService.findByAID(AID);
+            String str = "";
+            Iterator<Meeting> it = meetings.iterator();
+            while (it.hasNext()) {
+                Meeting meeting = it.next();
+                //判断是否已结束，若结束则status改为以结束，并且更新meeting
+                if(meeting.getStatus().compareTo("已分配") == 0){
+                    meeting.setStatus(isFinished(meeting.getEndTime(),meeting.getStatus()));
+                    meetingService.updateMeeting(meeting);
+                }
+                str += meeting.getName()+ ";" + meeting.getSponsor() + ";" + meeting.getStartTime() + ";" + meeting.getEndTime() + ";" + meeting.getHeadcount() + ";" +
+                        meeting.getProjector() + ";" + meeting.getMicrophone() + ";" + meeting.getStatus() + ";" + meeting.getUserID() + ";" + meeting.getAdmName() + ";" +
+                        meeting.getRoomID() + "|";
             }
-            str += meeting.getName()+ ";" + meeting.getSponsor() + ";" + meeting.getStartTime() + ";" + meeting.getEndTime() + ";" + meeting.getHeadcount() + ";" +
-                    meeting.getProjector() + ";" + meeting.getMicrophone() + ";" + meeting.getStatus() + ";" + meeting.getUserID() + ";" + meeting.getAdmName() + ";" +
-                    meeting.getRoomID() + "|";
+            str = str.substring(0,str.length()-1);
+            return str;
+        }catch (Exception e){
+            return "WTFnull";
         }
-        str = str.substring(0,str.length()-1);
-        return str;
     }
 }
