@@ -115,13 +115,14 @@ public class MeetingController {
         while (it.hasNext()) {
             Meeting meeting = it.next();
             //判断是否已结束，若结束则status改为以结束，并且更新meeting
-            if(meeting.getStatus().compareTo("已分配") == 0){
+            if(meeting.getStatus().compareTo("已分配") == 0 && meeting.getStatus().compareTo("申请中") == 0){
                 meeting.setStatus(isFinished(meeting.getEndTime(),meeting.getStatus()));
                 meetingService.updateMeeting(meeting);
             }
-            str += meeting.getName()+ ";" + meeting.getSponsor() + ";" + meeting.getStartTime() + ";" + meeting.getEndTime() + ";" + meeting.getHeadcount() + ";" +
-                    meeting.getProjector() + ";" + meeting.getMicrophone() + ";" + meeting.getStatus() + ";" + meeting.getUserID() + ";" + meeting.getAdmName() + ";" +
-                    meeting.getRoomID() + "|";
+//            str += meeting.getName()+ ";" + meeting.getSponsor() + ";" + meeting.getStartTime() + ";" + meeting.getEndTime() + ";" + meeting.getHeadcount() + ";" +
+//                    meeting.getProjector() + ";" + meeting.getMicrophone() + ";" + meeting.getStatus() + ";" + meeting.getUserID() + ";" + meeting.getAdmName() + ";" +
+//                    meeting.getRoomID() + "|";
+            str += meeting.getName()+ ";" + ";" + meeting.getStartTime() + ";" + meeting.getStatus() + "|";
         }
         str = str.substring(0,str.length()-1);
         return str;
