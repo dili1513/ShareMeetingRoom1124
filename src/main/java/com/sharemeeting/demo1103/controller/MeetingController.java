@@ -54,11 +54,12 @@ public class MeetingController {
     //2.根据ID删除
     @RequestMapping(value = "delete", method = RequestMethod.GET)
     public String delete(Integer ID) {
-        int result = meetingService.deleteMeeting(ID);
-        if (result >= 1) {
+        try{
+            meetingPeopleService.deleteByID(ID);
+            meetingService.deleteMeeting(ID);
             return "删除成功";
-        } else {
-            return "删除失败";
+        }catch (Exception e){
+            return "WTFnull";
         }
     }
 
@@ -109,23 +110,27 @@ public class MeetingController {
     @RequestMapping("findByUID")
     @ResponseBody
     public String findByUID(String UID) {
-        List<Meeting> meetings = meetingService.findByUID(UID);
-        String str = "";
-        Iterator<Meeting> it = meetings.iterator();
-        while (it.hasNext()) {
-            Meeting meeting = it.next();
-            //判断是否已结束，若结束则status改为以结束，并且更新meeting
-            if(meeting.getStatus().compareTo("已分配") == 0 && meeting.getStatus().compareTo("申请中") == 0){
-                meeting.setStatus(isFinished(meeting.getEndTime(),meeting.getStatus()));
-                meetingService.updateMeeting(meeting);
-            }
+        try{
+            List<Meeting> meetings = meetingService.findByUID(UID);
+            String str = "";
+            Iterator<Meeting> it = meetings.iterator();
+            while (it.hasNext()) {
+                Meeting meeting = it.next();
+                //判断是否已结束，若结束则status改为以结束，并且更新meeting
+                if(meeting.getStatus().compareTo("已分配") == 0){
+                    meeting.setStatus(isFinished(meeting.getEndTime(),meeting.getStatus()));
+                    meetingService.updateMeeting(meeting);
+                }
 //            str += meeting.getName()+ ";" + meeting.getSponsor() + ";" + meeting.getStartTime() + ";" + meeting.getEndTime() + ";" + meeting.getHeadcount() + ";" +
 //                    meeting.getProjector() + ";" + meeting.getMicrophone() + ";" + meeting.getStatus() + ";" + meeting.getUserID() + ";" + meeting.getAdmName() + ";" +
 //                    meeting.getRoomID() + "|";
-            str += meeting.getName()+ ";" + ";" + meeting.getStartTime() + ";" + meeting.getStatus() + "|";
+                str += meeting.getName()+ ";" + ";" + meeting.getStartTime() + ";" + meeting.getStatus() + "|";
+            }
+            str = str.substring(0,str.length()-1);
+            return str;
+        }catch (Exception e){
+            return "WTFnull";
         }
-        str = str.substring(0,str.length()-1);
-        return str;
     }
     //根据AID查找
     @RequestMapping("findByAID")
