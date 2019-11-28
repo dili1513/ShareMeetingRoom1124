@@ -24,8 +24,7 @@ public interface UserMapper {
 //
 //    //修改用户信息；
 //    @Update("update users set password = #{password} where name = #{name}")
-//    void updateUser(User user) throws Exception;
-    List<User> findUserByName(String name);
+    User findUserByName(String name);
     public List<User> ListUser();
     public void insertUser(User user);
     public int delete(String name);

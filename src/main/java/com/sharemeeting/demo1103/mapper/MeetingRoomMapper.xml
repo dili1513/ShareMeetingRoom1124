@@ -17,6 +17,18 @@
     <select id="ListMeetingRoom" resultType="com.sharemeeting.demo1103.beans.MeetingRoom">
         SELECT * FROM sharemeetingroom.MeetingRoom
     </select>
+    <select id="ListMeetingRoomFromUser" resultType="com.sharemeeting.demo1103.beans.MeetingRoom">
+        SELECT * FROM sharemeetingroom.MeetingRoom where UserName=#{Username}
+    </select>
+    <select id="ListMeetingRoomFromAdmin" resultType="com.sharemeeting.demo1103.beans.MeetingRoom">
+        SELECT * FROM sharemeetingroom.MeetingRoom where AdmName=#{AdminName}
+    </select>
+
+    <select id="findMeetingRoom" resultType="com.sharemeeting.demo1103.beans.MeetingRoom">
+        SELECT * FROM sharemeetingroom.MeetingRoom where Address=#{room.Address} and Name=#{room.Name} and
+        Capacity=#{room.Capacity} and Projector=#{room.Projector} and Microphone=#{room.Microphone} and
+        Username=#{room.Username} and AdmName=#{room.AdmName}
+    </select>
 
 <!--    <select id="findAdminByName" resultMap="result">-->
 <!--        SELECT * FROM Administrator where name=#{name}-->
@@ -24,15 +36,18 @@
 
     <insert id="insertMeetingRoom" parameterType="com.sharemeeting.demo1103.beans.MeetingRoom">
 <!--            keyProperty="ID" useGeneratedKeys="true">-->
+        <selectKey keyProperty="ID" keyColumn="ID" resultType="int" order="AFTER">
+            select last_insert_id();
+        </selectKey>
         INSERT INTO sharemeetingroom.MeetingRoom(Address,Name,Capacity,Projector,Microphone,UserName,AdmName)
-        VALUES (#{room.Address, jdbcType=VARCHAR},#{room.Name, jdbcType=VARCHAR},
-                #{room.Capacity,jdbcType=INTEGER},#{room.Projector,jdbcType=INTEGER},
-                #{room.Microphone,jdbcType=INTEGER},#{room.Username,jdbcType=VARCHAR},
-                #{room.AdmName,jdbcType=VARCHAR})
+        VALUES (#{Address},#{Name},#{Capacity},#{Projector},#{Microphone},#{Username},#{AdmName})
     </insert>
 
-    <delete id="deleteMeetingRoom" parameterType="String">
-        delete from sharemeetingroom.MeetingRoom where Address=#{Address}
+    <delete id="deleteMeetingRoomU" parameterType="String">
+        delete from sharemeetingroom.MeetingRoom where Name=#{Name} and UserName=#{Username}
+    </delete>
+    <delete id="deleteMeetingRoomA" parameterType="String">
+        delete from sharemeetingroom.MeetingRoom where Name=#{Name} and AdmName=#{Admname}
     </delete>
 
     <update id="UpdateMeetingRoom" parameterType="com.sharemeeting.demo1103.beans.MeetingRoom"

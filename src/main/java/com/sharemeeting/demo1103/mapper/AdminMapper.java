@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface AdminMapper {
 
-    List<Administrator> findAdminByName(String name);
+    Administrator findAdminByName(String name);
     public List<Administrator> ListAdmin();
     public int insertAdmin(Administrator user);
     public int deleteAdmin(String name);

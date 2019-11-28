@@ -154,6 +154,7 @@ public class MeetingController {
                 str += meeting.getName()+ ";" + meeting.getSponsor() + ";" + meeting.getStartTime() + ";" + meeting.getEndTime() + ";" + meeting.getHeadcount() + ";" +
                         meeting.getProjector() + ";" + meeting.getMicrophone() + ";" + meeting.getStatus() + ";" + meeting.getUserID() + ";" + meeting.getAdmName() + ";" +
                         meeting.getRoomID() + "|";
+
             }
             str = str.substring(0,str.length()-1);
             return str;

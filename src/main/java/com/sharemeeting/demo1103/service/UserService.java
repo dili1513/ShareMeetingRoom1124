@@ -19,7 +19,7 @@ public class UserService{
 
     @Autowired
     private UserMapper userMapper;
-    public List<User> findByName(String name) {
+    public User findByName(String name) {
         return userMapper.findUserByName(name);
     }
     public void insertUser(User user) { userMapper.insertUser(user);}//return user;}

@@ -11,7 +11,7 @@ public class AdminService {
     @Autowired
     private AdminMapper adminMapper;
 
-    public List<Administrator> findAdminByName(String name) {
+    public Administrator findAdminByName(String name) {
         return adminMapper.findAdminByName(name);
     }
     public Administrator insertAdmin(Administrator admin) { adminMapper.insertAdmin(admin);return admin;}
